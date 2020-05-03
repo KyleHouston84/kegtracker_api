@@ -26,19 +26,18 @@ router.post('/', (req, res, next) => {
     });
 });
 
-const update = (id, payload, collectionName) => {
-    let selection = {};
-    selection._id = ObjectID(id);
-    console.log("Update with ", payload)
-    return new Promise((resolve) => {
-        connect(collectionName).then(collection => {
-            collection.updateOne(selection, {
-                $set: payload
-            }, (err, result) => {
-                resolve(result);
+router.patch('/', (req, res, next) => {
+    if (req.query.id) {
+        mongoDb.update(req.query.id, req.body, collectionName).then(result => {
+            res.json({
+                result: result
             });
         });
-    });
-}
+    } else {
+        res.send("Missing document ID");
+    }
+
+});
+
 
 module.exports = router;
