@@ -7,6 +7,7 @@ const collectionName = 'kegs';
 /* GET status of keg. */
 router.get('/', function (req, res, next) {
     console.log("GET KEGS")
+    let filter;
     if (req.query.id) filter._id = ObjectId(req.query.id);
 
     mongoDb.get(filter, collectionName).then(result => {
@@ -17,6 +18,7 @@ router.get('/', function (req, res, next) {
 });
 
 router.post('/', (req, res, next) => {
+    console.log("add req:", req.body);
     mongoDb.add(req.body, collectionName).then(result => {
         res.json({
             keg: result
@@ -38,7 +40,5 @@ const update = (id, payload, collectionName) => {
         });
     });
 }
-
-
 
 module.exports = router;

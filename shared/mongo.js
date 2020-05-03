@@ -3,6 +3,7 @@ const url = 'mongodb://localhost:27017';
 const ObjectID = require('mongodb').ObjectID;
 
 const connect = (collectionName) => {
+    console.log("connecting to mongo...")
     return new Promise((resolve) => {
         mongoDb.connect(url, {
             useNewUrlParser: true,
@@ -13,8 +14,9 @@ const connect = (collectionName) => {
                 resolve(err);
                 return
             }
-            const db = client.db('home-kegs');
+            const db = client.db('kegs');
             const collection = db.collection(collectionName);
+            console.log("connected to mongodb", db)
             resolve(collection);
         });
     });
@@ -23,6 +25,7 @@ const connect = (collectionName) => {
 const get = (filter, collectionName) => {
     return new Promise((resolve) => {
         connect(collectionName).then(collection => {
+            console.log("getting from mongodb...");
             collection.find(filter).toArray((err, logs) => {
                 resolve(logs);
             });
