@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const mongoDb = require('../shared/mongo');
+const moment = require('moment');
 const collectionName = 'taps';
 
 
@@ -39,6 +40,9 @@ router.patch('/', (req, res, next) => {
 router.patch('/pour', (req, res, next) => {
     if (req.query.id) {
         const payload = {
+            $currentDate: {
+                date_last_poured: true
+            },
             $inc: { 
                 pours: 1,
                 "keg.pours": 1
