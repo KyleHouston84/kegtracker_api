@@ -7,6 +7,7 @@ const logger = require('morgan');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const kegsRouter = require('./routes/kegs');
+const tapsRouter = require('./routes/taps');
 
 
 const app = express();
@@ -19,6 +20,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/kegs', kegsRouter);
+app.use('/taps', tapsRouter);
 app.use('/users', usersRouter);
 
 module.exports = app;
